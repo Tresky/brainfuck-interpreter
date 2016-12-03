@@ -20,13 +20,13 @@ int main(int argc, char* argv[])
   char ticker[TICKER_SIZE];
   short pointer = 0;
 
-  std::fill(ticker, ticker + TICKER_SIZE, 0);
-
   if (argc <= 1)
-    error(100);
+  error(100);
 
   std::string file_name = argv[1];
   ifstream input(file_name);
+
+  std::fill(ticker, ticker + TICKER_SIZE, 0);
 
   char c;
   while (input.get(c))
@@ -63,7 +63,20 @@ int main(int argc, char* argv[])
         ticker[pointer] = getchar();
         break;
       case '[':
-        loop_pointers.push(code_pointer);
+        if (ticker[pointer] != 0)
+          loop_pointers.push(code_pointer);
+        else
+        {
+          char i;
+          short end = code_pointer + 1;
+          while ((i = code[end]) != ']' && i != '#')
+            ++end;
+
+          if (i == ']')
+            code_pointer = end;
+          else
+            error(300);
+        }
         break;
       case ']':
         if (ticker[pointer] != 0)
@@ -73,6 +86,7 @@ int main(int argc, char* argv[])
         break;
       default:
         error(200, c);
+        break;
     }
 
     ++code_pointer;
@@ -89,6 +103,10 @@ void error(int _code, int _detail)
       break;
     case 200:
       cout << "Invalid token read: " << char(_detail) << endl;
+      break;
+    case 300:
+      cout << "Ending bracket not found." << endl;
+      break;
   }
 
   exit(_code);
