@@ -1,3 +1,15 @@
+/**
+ * Title: Brainfuck Interpreter
+ * Author: Tyler Petresky
+ * Date: 12-03-16
+ * Desc: Brainfuck is an esoteric language
+ * that uses 8 commands to do computations.
+ * Brainfuck is a Turing-complete language.
+ * This means that is can be used to solve
+ * any computational problem given enough
+ * time and memory space.
+ */
+
 #include <iostream>
 #include <fstream>
 #include <algorithm>
