@@ -1,8 +1,5 @@
 #include <iostream>
-  using std::cout;
-  using std::endl;
 #include <fstream>
-  using std::ifstream;
 #include <algorithm>
 #include <vector>
 #include <stack>
@@ -24,7 +21,7 @@ int main(int argc, char* argv[])
   error(100);
 
   std::string file_name = argv[1];
-  ifstream input(file_name);
+  std::ifstream input(file_name);
 
   std::fill(ticker, ticker + TICKER_SIZE, 0);
 
@@ -57,7 +54,7 @@ int main(int argc, char* argv[])
         --ticker[pointer];
         break;
       case '.':
-        cout << ticker[pointer];
+        std::cout << ticker[pointer];
         break;
       case ',':
         ticker[pointer] = getchar();
@@ -95,17 +92,17 @@ int main(int argc, char* argv[])
 
 void error(int _code, int _detail)
 {
-  cout << "Error Code " << _code << ": ";
+  std::cout << "Error Code " << _code << ": ";
   switch (_code)
   {
     case 100:
-      cout << "No input file specified." << endl;
+      std::cout << "No input file specified." << std::endl;
       break;
     case 200:
-      cout << "Invalid token read: " << char(_detail) << endl;
+      std::cout << "Invalid token read: " << char(_detail) << std::endl;
       break;
     case 300:
-      cout << "Ending bracket not found." << endl;
+      std::cout << "Ending bracket not found." << std::endl;
       break;
   }
 

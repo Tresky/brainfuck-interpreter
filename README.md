@@ -12,3 +12,5 @@ Brainfuck is an esoteric language that consists of only 8 commands:
 * `,` ->	Input a byte and store it in the byte at the pointer.
 * `[` ->	Jump forward past the matching ] if the byte at the pointer is zero.
 * `]` ->	Jump backward to the matching [ unless the byte at the pointer is zero.
+
+For more information on Brainfuck: [http://www.muppetlabs.com/~breadbox/bf/](http://www.muppetlabs.com/~breadbox/bf/)
