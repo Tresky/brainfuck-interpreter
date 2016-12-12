@@ -40,16 +40,18 @@ int main(int argc, char* argv[])
   char c;
   while (input.get(c))
     code[code_pointer++] = c;
-  code[code_pointer] = '#';
+  code[code_pointer] = '\0';
 
   std::stack<short> loop_pointers;
 
   int nest;
   code_pointer = 0;
-  while ((c = code[code_pointer]) != '#')
+  while ((c = code[code_pointer]) != '\0')
   {
     switch (c)
     {
+      case '#':
+        while (code[++code_pointer] != '\n');
       case ' ':
       case '\n':
       case '\t':
@@ -70,7 +72,8 @@ int main(int argc, char* argv[])
         std::cout << ticker[pointer];
         break;
       case ',':
-        ticker[pointer] = getchar();
+        std::cin >> ticker[pointer];
+        // ticker[pointer] = getchar();
         break;
       case '[':
         nest = 1;
