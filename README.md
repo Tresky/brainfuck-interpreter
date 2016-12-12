@@ -27,5 +27,6 @@ You can execute the file like any other compiled program. The only argument that
 * `hello.bf` should print `Hello World` to the terminal.
 * `skiploop.bf` should simply execute and halt. If this test doesn't halt it means that loops are not being skipped properly.
 * `add.bf` should add `2+5=7` and print the answer to the terminal. _The top half of this code is the adding. The second half adds `48` to the result in order to print the ASCII value for our answer._
+* `squares.bf` should print out all of the perfect squares between 0 and 10000.
 
 For more information on Brainfuck: [http://www.muppetlabs.com/~breadbox/bf/](http://www.muppetlabs.com/~breadbox/bf/)

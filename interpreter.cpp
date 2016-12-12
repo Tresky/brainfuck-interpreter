@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
 
   std::stack<short> loop_pointers;
 
+  int nest;
   code_pointer = 0;
   while ((c = code[code_pointer]) != '#')
   {
@@ -71,23 +72,27 @@ int main(int argc, char* argv[])
       case ',':
         ticker[pointer] = getchar();
         break;
-      case '[': {
-        int bal = 1;
+      case '[':
+        nest = 1;
         if (ticker[pointer] == 0) {
-        do {
-          code_pointer++;
-          if (code[code_pointer] == '[') bal++;
-          else if (code[code_pointer] == ']') bal--;
-        } while (bal != 0);
-      }
+          do {
+            code_pointer++;
+            if (code[code_pointer] == '[')
+              nest++;
+            else if (code[code_pointer] == ']')
+              nest--;
+          } while (nest != 0);
+        }
         break;
-      case ']': {
-        int bal = 0;
+      case ']':
+        nest = 0;
         do {
-          if      (code[code_pointer] == '[') bal++;
-          else if (code[code_pointer] == ']') bal--;
+          if (code[code_pointer] == '[')
+            nest++;
+          else if (code[code_pointer] == ']')
+            nest--;
           code_pointer--;
-        } while ( bal != 0 ); }
+        } while (nest != 0);
         break;
       default:
         error(200, c);
