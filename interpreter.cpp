@@ -71,27 +71,23 @@ int main(int argc, char* argv[])
       case ',':
         ticker[pointer] = getchar();
         break;
-      case '[':
-        if (ticker[pointer] != 0)
-          loop_pointers.push(code_pointer);
-        else
-        {
-          char i;
-          short end = code_pointer + 1;
-          while ((i = code[end]) != ']' && i != '#')
-            ++end;
-
-          if (i == ']')
-            code_pointer = end;
-          else
-            error(300);
-        }
+      case '[': {
+        int bal = 1;
+        if (ticker[pointer] == 0) {
+        do {
+          code_pointer++;
+          if (code[code_pointer] == '[') bal++;
+          else if (code[code_pointer] == ']') bal--;
+        } while (bal != 0);
+      }
         break;
-      case ']':
-        if (ticker[pointer] != 0)
-          code_pointer = loop_pointers.top();
-        else
-          loop_pointers.pop();
+      case ']': {
+        int bal = 0;
+        do {
+          if      (code[code_pointer] == '[') bal++;
+          else if (code[code_pointer] == ']') bal--;
+          code_pointer--;
+        } while ( bal != 0 ); }
         break;
       default:
         error(200, c);
