@@ -14,66 +14,65 @@
 #include <fstream>
 #include <algorithm>
 #include <vector>
-#include <stack>
-
-#define CODE_SIZE 30000
-#define TICKER_SIZE 30000
 
 void error(int _code, int _detail = -1);
 
 int main(int argc, char* argv[])
 {
-  char code[CODE_SIZE];
-  short code_pointer = 0;
+  std::vector<char> code;
+  int code_pointer = 0;
 
-  char ticker[TICKER_SIZE];
-  short pointer = 0;
+  std::vector<int> ticker;
+  ticker.push_back(0);
+
+  int pointer = 0;
 
   if (argc <= 1)
-  error(100);
+    error(100);
 
   std::string file_name = argv[1];
   std::ifstream input(file_name);
 
-  std::fill(ticker, ticker + TICKER_SIZE, 0);
-
   char c;
   while (input.get(c))
-    code[code_pointer++] = c;
-  code[code_pointer] = '\0';
-
-  std::stack<short> loop_pointers;
+    code.push_back(c);
 
   int nest;
-  code_pointer = 0;
-  while ((c = code[code_pointer]) != '\0')
+  while (code_pointer < code.size())
   {
-    switch (c)
+    switch (code[code_pointer])
     {
       case '#':
-        while (code[++code_pointer] != '\n');
+        while (code[++code_pointer] != '\n' && code_pointer < code.size());
       case ' ':
       case '\n':
       case '\t':
         break;
       case '>':
+        if (pointer == ticker.size() - 1)
+          ticker.push_back(0);
         ++pointer;
         break;
       case '<':
-        --pointer;
+        if (pointer > 0)
+          --pointer;
         break;
       case '+':
-        ++ticker[pointer];
+        if (ticker[pointer] < INT_MAX)
+          ++ticker[pointer];
         break;
       case '-':
-        --ticker[pointer];
+        if (ticker[pointer] > 0)
+          --ticker[pointer];
         break;
       case '.':
-        std::cout << ticker[pointer];
+        std::cout << char(ticker[pointer]);
         break;
       case ',':
-        std::cin >> ticker[pointer];
-        // ticker[pointer] = getchar();
+        int t;
+
+        ticker[pointer] = std::cin.get();
+        std::cin.clear();
         break;
       case '[':
         nest = 1;
@@ -98,12 +97,14 @@ int main(int argc, char* argv[])
         } while (nest != 0);
         break;
       default:
-        error(200, c);
+        // error(200, code[code_pointer]);
         break;
     }
 
     ++code_pointer;
   }
+
+  return 0;
 }
 
 void error(int _code, int _detail)
