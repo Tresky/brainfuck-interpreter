@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
   std::vector<char> code;
   int code_pointer = 0;
 
-  std::vector<int> ticker;
+  std::vector<unsigned char> ticker;
   ticker.push_back(0);
 
   int pointer = 0;
@@ -58,11 +58,11 @@ int main(int argc, char* argv[])
           --pointer;
         break;
       case '+':
-        if (ticker[pointer] < INT_MAX)
+        // if (ticker[pointer] < INT_MAX)
           ++ticker[pointer];
         break;
       case '-':
-        if (ticker[pointer] > 0)
+        // if (ticker[pointer] > 0)
           --ticker[pointer];
         break;
       case '.':
